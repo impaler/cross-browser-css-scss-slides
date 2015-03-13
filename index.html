@@ -1,0 +1,1190 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>reveal.js - The HTML Presentation Framework</title>
+
+    <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+    <meta name="author" content="Hakim El Hattab">
+
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/black.css" id="theme">
+
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <link rel="stylesheet" href="css/custom.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+
+</head>
+
+<body>
+
+<div class="reveal">
+
+    <div class="slides">
+
+        <section class="intro">
+
+            <section>
+
+                <h3>Improving your cross-browser stylesheets</h3>
+                <h1>with SCSS</h1>
+
+                <p>
+                    <small>Created by <a href="http://github.com/impaler">Chris Decoster</a></small>
+                </p>
+
+            </section>
+
+            <section>
+
+                <h2>Topics:</h2>
+
+                <ul>
+                    <li class="fragment">What CSS can we use?</li>
+                    <li class="fragment">Why SCSS?</li>
+                    <li class="fragment">Best practices</li>
+                    <li class="fragment">Resources</li>
+                </ul>
+
+            </section>
+
+            <section>
+
+                <h2>Take aways:</h2>
+
+                <ul>
+                    <li class="fragment">Inspired you to think differently about how you write css</li>
+                    <li class="fragment">Learned something new about SCSS || CSS</li>
+                    <li class="fragment">Provided you with resources for further study</li>
+                    <li class="fragment">Understand more about cross browser CSS development</li>
+                </ul>
+
+            </section>
+
+        </section>
+
+        <section class="what-are-we-using">
+
+            <section>
+
+                <h2>So we are writing CSS</h2>
+                <p class="fragment">What version can we use?</p>
+
+                <p class="fragment">Isn't this Html5?
+                    <span class="fragment">, CSS 2</span>
+                    <span class="fragment">, 2.1</span>
+                    <span class="fragment">, 3</span>
+                    <span class="fragment">, browser versions?</span>
+                </p>
+
+                <img class="fragment" src="images/too-many-choices.jpg" />
+
+            </section>
+
+            <section>
+
+                <p>The CSS spec is separate from HTML5
+                <br>
+                <img height="200" src="images/css3.svg"></p>
+
+                <p class="fragment">CSS3 refers to an ongoing spec organised in modules...</p>
+
+            </section>
+
+            <section>
+
+                <h2>CSS specification</h2>
+
+                <img height="490" src="images/CSS3_taxonomy_and_status_by_Sergey_Mavrody.svg"/>
+
+            </section>
+
+            <section>
+
+                <h2>CSS in practice</h2>
+
+                <br>
+
+                <p class="fragment">The lowest browser versions you are required to support,
+                    determine what css features you can use.</p>
+
+                <p class="fragment">After we determine this...<br>
+                    how do I find out if I can use <span class="highlights">x-property</span> everywhere?</p>
+
+            </section>
+
+            <section>
+
+                <h2>Compatibility charts</h2>
+
+                <ul class="fragment">
+                    <li><a href="http://www.caniuse.com">caniuse.com</a></li>
+                    <li><a href="http://www.quirksmode.org/">quirksmode.org</a></li>
+                    <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference">MDN css reference</a></li>
+                    <li><a href="https://status.modern.ie/">status.modern.ie</a></li>
+                    <li><a href="https://www.chromestatus.com/features">chromestatus</a></li>
+                    <img src="images/canvas-blend-modes.PNG" />
+                </ul>
+
+            </section>
+
+            <section>
+
+                <h2>The cross browser CSS reality</h2>
+
+                <p class="fragment">you may have to work around inconsistent browser implementations and edge cases.</p>
+
+                <ul>
+                    <li class="fragment">- Vendor prefixes <span
+                            class="highlights">-webkit, -ms, -moz, -o, -khtml</span></li>
+                    <li class="fragment">- <span class="highlights">::-webkit-scrollbar-x</span> styling</li>
+                    <li class="fragment">- Rounded stroke with a dotted style</li>
+                    <li class="fragment">- Styling svg elements with CSS classes in Android 4.0</li>
+                    <li class="fragment">- Quirks with css <span class="highlights">transform-</span> properties</li>
+                </ul>
+
+            </section>
+
+            <section>
+
+                <h3>How can we deal with so many browsers, their versions and operating systems?</h3>
+
+                <img class="fragment" src="images/my-css-works.jpg">
+
+            </section>
+
+            <section>
+
+                <ul>
+                    <li class="fragment">Remember to breathe</li>
+                    <li class="fragment">Web developers continue to make quality products despite cross browser issues</li>
+                    <li class="fragment">Its unlikely you will be the first person to encounter an issue use online resources</li>
+                </ul>
+
+            </section>
+
+            <section>
+
+                <h4>How to work productively in cross browser development</h4>
+
+                <ul>
+                    <li class="fragment">Pair program with your colleagues, discuss and research issues online</li>
+                    <li class="fragment">Share and document browser quirks with your team
+                        and the online communities, MDN, StackOverflow, Google Groups
+                    </li>
+                    <li class="fragment">If you end up determining an issue doesn't have a workaround/polyfill sometimes
+                        it has to be "Wont fix".
+                    <li class="fragment">Make it known to the development and QA team, maybe even tech support.
+                    </li>
+                </ul>
+            </section>
+            
+            <section>
+                
+                <h4>Don't be this guy</h4>
+                
+                <img height="500" src="images/test-code.png">
+                
+            </section>
+
+            <section>
+
+                <h4>Use Automated testing</h4>
+
+                <ul class="smaller-points fragment">
+                    <li><a href="http://www.seleniumhq.org/projects/grid/">Selenium grid</a></li>
+                    <li><a href="http://docs.seleniumhq.org/projects/webdriver/">Webdriver</a></li>
+                </ul>
+
+                <div class="fragment">
+                    <p>CSS regression testing</p>
+
+                    <ul class="smaller-points">
+                        <li><a href="https://github.com/webdriverio/webdrivercss">WebdriverCSS</a></li>
+                        <li><a href="https://github.com/Huddle/PhantomCSS">PhantomCSS</a></li>
+                    </ul>
+
+                    <br>
+
+                    <img height="300" src="images/css-regression.png">
+                </div>
+
+            </section>
+
+            <section>
+
+                <p>Cloud based cross browser testing</p>
+
+                <ul class="smaller-points">
+                    <li><a href="http://www.browserstack.com/">BrowserStack</a></li>
+                    <li><a href="http://www.saucelabs.com/">SauceLabs</a></li>
+                </ul>
+
+                <br>
+
+                <img height="280" src="images/saucelabs.png"/>
+                <img height="280" src="images/saucelabs-2.png"/>
+                <img height="280" src="images/browserstack.png"/>
+
+            </section>
+
+            <section>
+
+                <h4>Use a reset/normalise stylesheet</h4>
+
+                <ul>
+                    <li><p class="fragment">Not all browsers start with the same css property values for specific
+                        element with properties like margin, fonts, overflow</p></li>
+                    <li><p class="fragment">Avoid cross browser inconsistency from a stylesheet that has solved this problem</p></li>
+                    <li><p class="fragment">Most css frameworks will already have one, eg bootstrap uses the popular normalize.css lib</p></li>
+                </ul>
+
+            </section>
+
+            <section>
+
+                <h3>Cross browser CSS is better today than it ever has been</h3>
+
+                <div class="acid-test fragment">
+
+                    <p class="smaller-points">This is supposed to be a smiley face
+                        <a href="http://acid2.acidtests.org"> (Acid 2 test)</a> IE8's standards mode</p>
+
+                    <div class="acid-image">
+                        <img width="200" src="images/acid-test/ie6-Ieacid2.png"/>
+                        <span>IE6</span>
+                    </div>
+
+                    <div class="acid-image">
+                        <img width="200" src="images/acid-test/Ie7acid2.png"/>
+                        <span>IE7</span>
+                    </div>
+
+                    <div class="acid-image">
+                        <img width="200" src="images/acid-test/FF-1-150px-Acid2_NS72.png"/>
+                        <span>FF 1</span>
+                    </div>
+
+                    <div class="acid-image">
+                        <img width="200" src="images/acid-test/Mobile-Safari-90px-Acid2.png"/>
+                        <span>Safari Mobile 3.1</span>
+                    </div>
+
+                    <div class="acid-image">
+                        <img width="200" src="images/acid-test/Opera_8.0-150px_Acid2.png"/>
+                        <span>Opera 8</span>
+                    </div>
+                </div>
+
+            </section>
+
+            <section>
+
+                <h2>Future browser versions</h2>
+                <p>All major browsers will autoupdate (Evergreen)</p>
+
+                <ul>
+                    <li class="fragment"><p>The w3c have impressive opensource test coverage beyond the acid tests.
+                    <a href="https://github.com/w3c/csswg-test">csswg-test</a></p>
+                        <img height="280" src="images/acid-test/acid2.PNG">
+                        <img height="280" src="images/unit-tests.jpg">
+                    </li>
+                </ul>
+
+            </section>
+
+            <section>
+                <h2>Sass and Scss, are they different??</h2>
+
+                <ul>
+                    <li class="fragment">They are derived from the same project, they have a different syntax</li>
+                    <li class="fragment">SASS has no { curlys } and its indentation-oriented</li>
+                    <li class="fragment">SCSS is more like a superset of css</li>
+                    <li class="fragment">See examples on http://sass-lang.com/</li>
+                    <li class="fragment">Article
+                        <a href="http://thesassway.com/editorial/sass-vs-scss-which-syntax-is-better">SASS-vs-SCSS</a>
+                    </li>
+                </ul>
+
+            </section>
+
+            <section>
+
+                <h3>SASS itself has different implementations</h3>
+
+                <p class="fragment">Sass transpiler engines:</p>
+
+                <ul class="fragment">
+                    <li>Ruby SASS (advanced features)<br><img height="100" src="images/sass.png"></li>
+                    <li>LibSASS (very fast, no Ruby dependency)<br><img height="100" src="images/libsass.svg"></li>
+                </ul>
+
+            </section>
+
+            <section>
+
+                <h4>Both SASS implementations are mature</h4>
+
+                <ul>
+                    <li>
+                        <p>If you need to verify SASS engine compatibility<br>
+                            <a href="http://sass-compatibility.github.io">sass-compatibility.github.io</a></p>
+                    </li>
+                </ul>
+
+            </section>
+
+        </section>
+
+        <section class="why-scss">
+
+            <section>
+
+                <h2>Why are we using Scss?</h2>
+
+                <img src="images/sass.png">
+
+            </section>
+
+            <section>
+
+                <h2>SASS lets us</h2>
+
+                <ul>
+                    <li class="fragment">Write stylesheets following the
+                        <a href="http://en.wikipedia.org/wiki/Don%27t_repeat_yourself">DRY</a> principle</li>
+                    <li class="fragment">Solve cross browser issues in libraries</li>
+                    <li class="fragment">Improve our code organisation</li>
+                    <li class="fragment">More easily tweak css values
+                        for future adjustments and even create different themes through configuration</li>
+                </ul>
+
+            </section>
+
+            <section>
+                <h2>Variables</h2>
+<pre>
+    <code language="scss">
+$font-stack: Helvetica, sans-serif;
+$primary-color: #333;
+
+body {
+    font: 100% $font-stack;
+    color: $primary-color;
+}
+    </code>
+</pre>
+
+            </section>
+
+            <section>
+                <h2>Operators</h2>
+
+                <p>
+                   +, -, *, /, %
+                </p>
+
+<pre><code language="scss">
+$home-available-width = 960px;
+$home-section = $home-available-width/2;
+
+.home-sub-section {
+    width: $home-section/2; //240px;
+    height: 300px / 960px * 100%; //31.25%
+    margin-left: 5px + 8px/2px; //9px
+}
+</code></pre>
+
+            </section>
+
+            <section>
+
+                <h2>Nesting</h2>
+
+                <p>Write styles using nested selectors</p>
+
+<pre><code language="scss">
+nav {
+    ul {
+        margin: 0;
+    }
+
+    li {
+        display: inline-block;
+    }
+
+    a {
+        display: block;
+        padding: 6px 12px;
+        text-decoration: none;
+    }
+}
+</code></pre>
+
+                <p>Your IDE code-folding will now let you fold everything in nav</p>
+
+            </section>
+
+                <section>
+
+                    <p>Compiled result of nested selectors</p>
+
+<pre><code language="css">
+nav ul {
+    margin: 0;
+}
+
+nav li {
+    display: inline-block;
+}
+
+nav a {
+    display: block;
+    padding: 6px 12px;
+    text-decoration: none;
+}
+</code></pre>
+
+            </section>
+
+            <section>
+
+                <h2>Imports</h2>
+
+                <p>A way to separate and organise your stylesheets into files.</p>
+
+<pre><code language="scss">
+// The result of this scss file will be a single css file
+
+@imports 'reset';
+@imports 'config';
+
+@imports './layout';
+
+@imports './pages/homepage';
+@imports './pages/contact-us';
+@imports './pages/about';
+</code></pre>
+
+            </section>
+
+            <section>
+
+                <h2>Mixins</h2>
+
+                <p>Solve cross browser issues in one line, useful for utilities and simplifying your stylesheets</p>
+
+<pre><code language="scss">
+//hyphens property needs some vendor prefixes
+
+@import 'mixin-library';
+
+p {
+    @include vendor-prefix(hyphens, auto)
+}
+</code></pre>
+
+<pre><code language="scss">
+@mixin vendor-prefix($name, $value) {
+    -webkit-#{$name}: #{$value};
+    -ms-#{$name}: #{$value};
+    -moz-#{$name}: #{$value};
+    -o-#{$name}: #{$value};
+    #{$name}: #{$value};
+}
+</code></pre>
+
+            </section>
+
+            <section>
+
+                <p>The compiled CSS for the vendor-prefix mixin</p>
+
+<pre><code language="scss">
+p {
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -o-hyphens: auto;
+    hyphens: auto;
+}
+</code></pre>
+            </section>
+
+            <section>
+
+                <h4>Functions let us create reusable calculations</h4>
+
+<pre><code language="scss">
+@function percent-value ($size) {
+    @return 100% / $size;
+}
+
+.columns-two {
+    width: percent-value(2); // 2 columns 50%
+}
+
+.columns-three {
+    width: percent-value(3); // 3 columns 33.3%
+}
+</code></pre>
+
+            </section>
+
+            <section>
+
+                <p>SASS provides robust color utilities</p>
+
+<pre><code language="scss">
+$base-color: #AD141E;
+
+darken($base-color, 10%);
+lighten($base-color, 10%);
+</code></pre>
+
+                <img src="images/darken.png" />
+
+            </section>
+
+            <section>
+
+                <p>Dealing with color</p>
+
+<pre><code language="scss">
+saturate($base-color, 20%);
+desaturate($base-color, 20%);
+</code></pre>
+
+                <img src="images/saturate.png" />
+
+<pre><code language="scss">
+adjust-hue($base-color, 20%);
+</code></pre>
+
+                <img src="images/hue.png" />
+
+            </section>
+
+            <section>
+
+                <p>See how you can inline them like or configure your colors</p>
+
+<pre><code language="scss">
+$base-color = rgba(orange, 0.5);
+$base-border-color = darken($base-color, 30%);
+
+.element {
+    border: 3px solid $base-border-color;
+    text-shadow: 0 -1px 0 darken($base-color, 16%);
+    @include box-shadow(inset 0 1px 0 lighten($base-color, 20%));
+}
+</code></pre>
+
+            </section>
+
+            <section>
+                <p>See the results of SASS color utilities visually</p>
+
+                <img height="500" src="images/sass-me.PNG" />
+
+                <p>http://sassme.arc90.com/</p>
+
+            </section>
+
+            <section>
+
+                <p>General purpose logic and calculations</p>
+
+<pre><code language="scss">
+@function clamp($value, $min, $max) {
+    @return if($value > $max, $max, if($value < $min, $min, $value));
+}
+
+clamp(4, 1, 3); // 3
+clamp(-5, 10, 20); // 10
+</code></pre>
+
+                </section>
+
+
+            <section>
+
+                <p>if else syntax</p>
+
+<pre><code language="scss">
+$function method($params) {
+    @if condition-method-a($params) and condition-method-b($params) {
+        @return $value;
+    } @else {
+        @warn "Warn and error for #{$params}";
+    }
+}
+</code></pre>
+
+            </section>
+
+            <section>
+
+                <p>Iterate over list or map</p>
+
+<pre><code language="scss">
+@each $header, $size in (h1: 2em, h2: 1.5em, h3: 1.2em) {
+    #{$header} {
+        font-size: $size;
+    }
+}
+//compiles to
+h1 {
+    font-size: 2em; }
+h2 {
+    font-size: 1.5em; }
+h3 {
+    font-size: 1.2em; }
+</code></pre>
+
+            </section>
+
+        </section>
+
+        <section class="best-practice">
+
+            <section>
+
+                <h2>Best Practices</h2>
+
+            </section>
+
+            <section>
+
+                <h2>Code Quality</h2>
+
+                <div class="fragment">
+                <p>Could you change the button color please?</p>
+
+<pre>
+    <code language="css">
+.btnLarge {width:200px;height:200px;display:block;};
+
+.orangeButton {
+background-color: orange;@extend %button-normal;
+}
+.blue-btn {
+@extend %btnBIG;
+background-color: blue;
+}
+.BUTTONSMALL {width:50px;height:50px;display:block;};
+.greenBUTTON{width:50px;height:50px;display:block;background-color:green;};
+.button-SmallBlack
+{@import specialButton(2,4);
+width:50px;height:$randomHeight;display:block;
+background-color:black;
+};
+    </code>
+</pre>
+
+                </div>
+
+            </section>
+
+            <section>
+
+                <img width="400" src="images/face-palm.jpg" />
+
+                <img width="400" src="images/broken-window.jpg" />
+
+                <p>Its not fun to read or write code like this.</p>
+
+                <p>We are in danger of falling into the
+                    <a href="http://blog.codinghorror.com/the-broken-window-theory">Broken Window Theory</a>
+                </p>
+
+            </section>
+
+            <section>
+
+                <h2>So what makes css easier to read and maintain?</h2>
+
+            </section>
+
+            <section>
+
+                <h2>Consistent Formatting</h2>
+
+                <ul>
+                    <li>Write classes and ids in 'hyphenated-case'</li>
+                    <li>Use consistent spacing, line-breaks and curly formatting</li>
+                </ul>
+
+<pre><code language="css">
+#home-section {
+    width: 960px;
+}
+
+.button-large {
+    width: 100px;
+    height: 40px;
+}
+
+.button-small {
+    width: 30px;
+    height: 10px;
+}
+</code></pre>
+
+            </section>
+
+            <section>
+
+                <h4>Comments</h4>
+
+                <p>Document complexity just like your Javascript</p>
+
+                <p>Sass has both /* */ and //</p>
+
+                <div class="fragment">
+
+                <p>Comment browser a specific styles</p>
+
+
+<pre><code language="css">
+// Safari disabled state override
+input[disabled] {
+    -webkit-text-fill-color: rgb(14, 43, 141);
+    -webkit-opacity: 1;
+    color: rgb(14, 43, 141);
+}
+</code></pre>
+
+                </div>
+
+            </section>
+
+            <section>
+
+                <h3>Use effective variable names</h3>
+
+                <div class="fragment">
+
+                <p>Vague names</p>
+
+<pre><code language="scss">
+$link: #ffa600;
+$width: 300px;
+$length: 200px;
+$radius: 5px;
+</code></pre>
+
+                </div>
+
+                <div class="fragment">
+
+                <p>Be more specific</p>
+
+<pre><code language="scss">
+$link-primary: #ffa600;
+$info-button-width: 300px;
+$home-sidebar-length: 200px;
+$tab-radius: 5px;
+</code></pre>
+
+                </div>
+
+            </section>
+
+
+            <section>
+                <h2>Properties order</h2>
+
+                <p>We have hundreds of possible properties, would a logical order make this easier to read?</p>
+
+<pre>
+    <code language="css">
+.button {
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    margin: 1em 0;
+    text-transform: uppercase;
+    padding: 1em 4em;
+    color: #fff;
+    border: 0.25em solid #196e76;
+    text-decoration: none;
+    background: #196e76;
+    font-size: 3em;
+    display: inline-block;
+    text-align: center;
+}
+    </code>
+</pre>
+
+            </section>
+
+            <section>
+
+                <h2>Order and group your properties by context</h2>
+
+                <ol>
+                    <li class="fragment">Layout (<span class="highlights">position, float, clear, display</span>)</li>
+                    <li class="fragment">Box Model (<span class="highlights">width, height, margin, padding</span>)</li>
+                    <li class="fragment">Visual (<span class="highlights">color, background, border, box-shadow</span>)</li>
+                    <li class="fragment">Typography (<span class="highlights">font-size, font-family, text-align</span>)</li>
+                    <li class="fragment">Misc (<span class="highlights">cursor, overflow, z-index</span>)</li>
+                </ol>
+
+            </section>
+
+            <section>
+                <h2>A contextual order</h2>
+
+<pre><code language="css">
+.button {
+    display: inline-block;
+    margin: 1em 0;
+    padding: 1em 4em;
+
+    color: #fff;
+    background: #196e76;
+    border: 0.25em solid #196e76;
+
+    font-size: 3em;
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+</code></pre>
+
+            </section>
+
+            <section>
+
+                <h3>Sorting properties by context</h3>
+
+                <ul>
+                    <li class="fragment">Redundant and duplicate properties will be more obvious</li>
+                    <li class="fragment">Less of a cognitive load to find a specific property to modify</li>
+                </ul>
+
+            </section>
+
+            <section>
+                <h2>Use the same order in your SASS mixins</h2>
+
+<pre><code language="scss">
+@mixin button($color, $background-color, $border-color, $font-family) {
+    display: inline-block;
+    margin: 1em 0;
+    padding: 1em 4em;
+
+    color: $color;
+    background: $background-color;
+    border: 0.25em solid $border-color;
+
+    font-size: 3em;
+    font-family: $font-family;
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+</code></pre>
+            </section>
+
+            <section>
+
+                <p>Order your css styles 'visually' where possible</p>
+
+<pre><code language="scss">
+.header {}
+.header-nav {}
+.sidebar {}
+.main-content {}
+.section-a {}
+.section-b {}
+.section-c {}
+.footer-nav {}
+.footer {}
+</code></pre>
+
+            </section>
+
+            <section>
+
+                <h3>Don't over complicate your selectors</h3>
+
+                <p>Rule of thumb with more than 3 levels you may want to rethink the style</p>
+
+<pre><code language="scss">
+nav div li ul li > a {
+    /* Over specific hard to read */
+}
+
+.sub-menu a {
+    /* Think about using a class */
+}
+</code></pre>
+
+            </section>
+
+            <section>
+
+                <h4>Limit your SASS nesting</h4>
+
+                <p>3 is also a good indicator, nesting should be easy to read.</p>
+
+<pre><code language="scss">
+.element {
+    /* your general CSS properties */
+
+    &:hover,
+    &:active,
+    &:focus {
+        /* hover/focus state can be encapsulated */
+    }
+
+    &::before {
+        /* The same for pseudo styles */
+    }
+}
+</code></pre>
+
+            </section>
+
+            <section>
+
+                <h3>Redundant @mixins can bloat your css</h3>
+
+                <ul>
+                    <li class="fragment">Each time you use a mixin it will insert the properties into the final css</li>
+                    <li class="fragment">Mixins are best suited when argument(s) are needed eg: @include rounded-corner(3);</li>
+                    <li class="fragment">When no parameter is required, @extend or placeholders prevent repitition in the compiled css</li>
+                </ul>
+
+            </section>
+
+            <section>
+
+                <h3>@extend example</h3>
+
+<pre><code language="scss">
+.bg-image {
+    width: 100%;
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.image-one {
+    @extend .bg-image;
+    background-image:url("/images/image-one.jpg");
+}
+
+.image-two {
+    @extend .bg-image;
+    background-image:url("/images/image-two.jpg");
+}
+</code></pre>
+
+                </section>
+
+                <section>
+
+                    <p>Compiles to</p>
+
+<pre><code language="css">
+.bg-image, .image-one, .image-two {
+    width: 100%;
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.image-one {
+    background-image:url("/images/image-one.jpg");
+}
+
+.image-two {
+    background-image:url("/images/image-two.jpg");
+}
+</code></pre>
+
+            </section>
+
+            <section>
+
+                <h4>Using @mixin</h4>
+                <p>The more you use it, the bloated the compiled stylesheet</p>
+
+<pre><code language="css">
+.image-one {
+    width: 100%;
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-image:url("/images/image-one.jpg");
+}
+
+.image-two {
+    width: 100%;
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-image:url("/images/image-two.jpg");
+}
+</code></pre>
+
+            </section>
+
+            <section>
+
+                <p>Use the SASS to avoid hard coding style, calculations and repeating yourself</p>
+
+                <img class="fragment" src="images/win.jpg">
+
+            </section>
+
+        </section>
+
+        <section class="resources">
+            <section>
+
+                <h2>Resources</h2>
+
+                <p>Sass</p>
+
+                <ul class="smaller-points">
+                    <li><a href="http://sass-lang.com/documentation/file.SASS_REFERENCE.html">Sass api docs</a></li>
+                    <li><a href="https://groups.google.com/forum/#!forum/sass-lang">
+                        sass-lang community on Google Groups</a> (Support forum)</li>
+                    <li><a href="http://bourbon.io/docs/#mixins">Bourbon Scss library</a> (brilliant mixin library)</li>
+                    <li><a href="http://stackoverflow.com/questions/tagged/sass">Stack overflow</a> (6000+ questions tagged)</li>
+                    <li><a href="http://thesassway.com/">thesassway.com</a> (brilliant articles)</li>
+                    <li><a href="http://sass-compatibility.github.io">Sass engine compatibility</a></li>
+                </ul>
+
+                <p>CSS Compatibility</p>
+
+                <ul class="smaller-points">
+                    <li><a href="http://caniuse.com/">caniuse.com</a></li>
+                    <li><a href="http://www.quirksmode.org/">quirksmode.org</a></li>
+                    <li><a href="https://status.modern.ie/">status.modern.ie</a></li>
+                    <li><a href="https://www.chromestatus.com/features">chromestatus.com</a></li>
+                    <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS">Mozilla Developer Network</a></li>
+                </ul>
+
+
+            </section>
+
+
+            <section class="credits">
+
+                <h2>Source Articles</h2>
+
+                <ul>
+                    <li><a href="https://github.com/w3c/csswg-test">W3C css test suite</a>
+                    </li>
+
+                    <li><a href="http://webdesign.tutsplus.com/articles/outside-in-ordering-css-properties-by-importance--cms-21685">
+                        “Outside In” css ordering
+                    </a></li>
+
+                    <li><a href="http://www.sitepoint.com/sass-extend-nobody-told-you/">
+                        What Nobody Told You About Sass’s @extend
+                    </a></li>
+
+                    <li><a href="http://www.sitepoint.com/sass-mixin-placeholder/">
+                        Sitepoint - sass mixin placeholder
+                    </a></li>
+
+                    <li><a href="https://robots.thoughtbot.com/controlling-color-with-sass-color-functions">
+                        Controlling color with sass
+                    </a></li>
+
+                    <li><a href="http://www.smashingmagazine.com/2009/08/17/taming-advanced-css-selectors">
+                        Taming Advanced css Selectors</a>
+                    </li>
+
+                    <li><a href="http://blog.codinghorror.com/the-broken-window-theory/">Broken window theory</a>
+                    </li>
+                </ul>
+
+            </section>
+
+            <section>
+
+<pre><code language="css">
+.END {
+    display: none;
+}
+</code></pre>
+            </section>
+
+        </section>
+
+    </div>
+
+</div>
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.js"></script>
+
+<script>
+
+    // Full list of configuration options available at:
+    // https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+        // Optional reveal.js plugins
+        dependencies: [
+            {
+                src: 'lib/js/classList.js', condition: function () {
+                return !document.body.classList;
+            }
+            },
+            {
+                src: 'plugin/markdown/marked.js', condition: function () {
+                return !!document.querySelector('[data-markdown]');
+            }
+            },
+            {
+                src: 'plugin/markdown/markdown.js', condition: function () {
+                return !!document.querySelector('[data-markdown]');
+            }
+            },
+            {
+                src: 'plugin/highlight/highlight.js', async: true, condition: function () {
+                return !!document.querySelector('pre code');
+            }, callback: function () {
+                hljs.initHighlightingOnLoad();
+            }
+            },
+            {src: 'plugin/zoom-js/zoom.js', async: true},
+            {src: 'plugin/notes/notes.js', async: true}
+        ]
+    });
+
+</script>
+
+</body>
+</html>

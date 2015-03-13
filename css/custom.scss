@@ -1,0 +1,32 @@
+.reveal pre code {
+  max-height: 600px;
+  padding-bottom: 26px;
+  padding-left: 20px;
+}
+
+.smaller-points li, p {
+  font-size: 0.7em;
+}
+
+p.smaller-points {
+  font-size: 0.7em;
+}
+
+span.highlights {
+  color: #93f7ff;
+  font-style: italic;
+  font-weight: lighter;
+}
+
+.acid-image img {
+  margin: 0;
+}
+
+.acid-image span {
+  font-size: 0.6em;
+}
+
+.acid-image {
+  display: inline-block;
+  width: 236px;
+}
